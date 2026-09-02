@@ -1,0 +1,20 @@
+{
+  "name": "cse-340-course-repository",
+  "version": "1.0.0",
+  "description": "this is the node application for ma course",
+  "homepage": "https://github.com/king6ava9e/CSE-340-COURSE-REPOSITORY#readme",
+  "bugs": {
+    "url": "https://github.com/king6ava9e/CSE-340-COURSE-REPOSITORY/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/king6ava9e/CSE-340-COURSE-REPOSITORY.git"
+  },
+  "license": "ISC",
+  "author": "Acheampong Kingsley",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
