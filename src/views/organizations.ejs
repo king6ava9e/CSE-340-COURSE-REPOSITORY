@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -15,9 +15,13 @@
             <li><a href="/organizations">Organizations</a></li>
             <li><a href="/projects">Projects</a></li>
         </ul>
-    </nav>
+    </nav> -->
+    <%- include('partials/header') %>
+
     <main>
-        <h1>Organizations Page</h1>
+    <h1>
+        <%= title %>
+    </h1>
     <p>Here are a few of our partner organizations:</p>
     <ul>
         <li><img src="/images/brightfuture-logo.png" alt="BrightFuture Builders logo"><strong>BrightFuture
@@ -28,6 +32,8 @@
             hello@unityserve.org</li>
     </ul>
     </main>
-</body>
+    <%- include('partials/footer') %>
 
-</html>
+<!-- </body>
+
+</html> -->
