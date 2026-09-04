@@ -1,4 +1,4 @@
-html,
+/* html,
 body {
     background-color: lightblue;
     font-family: Arial, sans-serif;
@@ -27,5 +27,355 @@ body {
                 color: #0066cc;
             }
         }
+    }
+} */
+
+
+/* ========================================
+   CSE 340 SERVICE NETWORK
+   Main Stylesheet
+   ======================================== */
+
+/* ---------- Design System ---------- */
+
+:root {
+    --primary: #1e3a5f;
+    --secondary: #2563eb;
+    --accent: #0f766e;
+
+    --text: #1f2937;
+    --muted-text: #6b7280;
+
+    --background: #ffffff;
+    --surface: #f8fafc;
+    --border: #e5e7eb;
+
+    --max-width: 1100px;
+
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2.5rem;
+    --spacing-xl: 4rem;
+
+    --radius-sm: 0.5rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+
+    --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.06);
+    --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.1);
+}
+
+
+/* ---------- Base / Reset ---------- */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.6;
+    color: var(--text);
+    background-color: var(--background);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+a {
+    color: var(--secondary);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+}
+
+
+/* ---------- Navigation ---------- */
+
+nav {
+    background-color: var(--primary);
+    padding: 1rem;
+}
+
+nav ul {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+nav a {
+    display: block;
+    padding: 0.65rem 1rem;
+    color: #ffffff;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+}
+
+nav a:hover {
+    background-color: var(--secondary);
+    text-decoration: none;
+}
+
+
+/* ---------- Main Layout ---------- */
+
+main {
+    width: min(100% - 2rem, var(--max-width));
+    margin: 0 auto;
+    padding: var(--spacing-xl) 0;
+    min-height: 70vh;
+}
+
+h1,
+h2 {
+    color: var(--primary);
+    line-height: 1.2;
+}
+
+h1 {
+    margin-top: 0;
+    margin-bottom: var(--spacing-md);
+    font-size: clamp(2rem, 5vw, 3rem);
+}
+
+h2 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
+    font-size: clamp(1.4rem, 3vw, 2rem);
+}
+
+p {
+    max-width: 70ch;
+    margin-bottom: var(--spacing-md);
+}
+
+
+/* ---------- Home Page ---------- */
+
+.main-logo {
+    width: min(100%, 450px);
+    margin: var(--spacing-lg) auto 0;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+}
+
+
+/* ---------- Lists ---------- */
+
+main ul {
+    padding-left: 1.5rem;
+}
+
+main li {
+    margin-bottom: 0.75rem;
+}
+
+
+/* ---------- Cards ---------- */
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+
+.card {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+
+/* ---------- Category Cards ---------- */
+
+.category-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+}
+
+.category-card {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 5px solid var(--accent);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--primary);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.category-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+
+/* ---------- Organisation Cards ---------- */
+
+.organisation-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-md);
+}
+
+.organisation-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow-sm);
+}
+
+.organisation-card img {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    margin-bottom: var(--spacing-sm);
+}
+
+.organisation-card strong {
+    display: block;
+    color: var(--primary);
+    margin-bottom: 0.35rem;
+}
+
+
+/* ---------- Project Cards ---------- */
+
+.project-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-md);
+}
+
+.project-card {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--secondary);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow-sm);
+}
+
+.project-card strong {
+    display: block;
+    color: var(--primary);
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+
+/* ---------- Footer ---------- */
+
+footer {
+    background-color: var(--primary);
+    color: #ffffff;
+    text-align: center;
+    padding: var(--spacing-md);
+}
+
+footer p {
+    margin: 0 auto;
+}
+
+
+/* ---------- Responsive Design ---------- */
+
+@media (max-width: 800px) {
+
+    .card-grid,
+    .organisation-list,
+    .project-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    nav ul {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+    }
+
+    nav a {
+        width: 100%;
+    }
+
+    main {
+        width: min(100% - 1.5rem, var(--max-width));
+        padding: var(--spacing-lg) 0;
+    }
+
+    .category-list,
+    .card-grid,
+    .organisation-list,
+    .project-list {
+        grid-template-columns: 1fr;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+}
+
+
+/* ---------- Reduced Motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
     }
 }
