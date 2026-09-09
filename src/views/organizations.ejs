@@ -24,23 +24,20 @@
     </h1>
     <p>Here are a few of our partner organizations:</p>
     <ul class="organisation-list">
-        <li class="organisation-card">
-            <img src="/images/brightfuture-logo.png" alt="BrightFuture Builders logo">
-            <strong>BrightFuture Builders</strong>
-            <span>info@brightfuture.org</span>
-        </li>
-    
-        <li class="organisation-card">
-            <img src="/images/greenharvest-logo.png" alt="GreenHarvest Growers logo">
-            <strong>GreenHarvest Growers</strong>
-            <span>contact@greenharvest.org</span>
-        </li>
-    
-        <li class="organisation-card">
-            <img src="/images/unityserve-logo.png" alt="UnityServe Volunteers logo">
-            <strong>UnityServe Volunteers</strong>
-            <span>hello@unityserve.org</span>
-        </li>
+        <% organizations.forEach(organization=> { %>
+            <li class="organisation-card">
+                <img src="/images/<%= organization.logo_filename %>" alt="<%= organization.name %> logo">
+                <strong>
+                    <%= organization.name %>
+                </strong>
+                <p>
+                    <%= organization.description %>
+                </p>
+                <span>
+                    <%= organization.contact_email %>
+                </span>
+            </li>
+            <% }) %>
     </ul>
     </main>
     <%- include('partials/footer') %>
