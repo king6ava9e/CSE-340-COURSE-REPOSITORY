@@ -47,3 +47,55 @@ VALUES
     (3, 'Volunteer Outreach Day', 'Connect volunteers with local community service opportunities.', 'Kumasi City Centre', '2026-10-15');
 
 	SELECT * FROM service_project;
+
+
+    CREATE TABLE category (
+    category_id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL UNIQUE
+);
+
+
+CREATE TABLE project_category (
+    project_id INTEGER NOT NULL,
+    category_id INTEGER NOT NULL,
+    PRIMARY KEY (project_id, category_id),
+    FOREIGN KEY (project_id) REFERENCES service_project(project_id),
+    FOREIGN KEY (category_id) REFERENCES category(category_id)
+);
+
+
+INSERT INTO category (name)
+VALUES
+    ('Environmental'),
+    ('Educational'),
+    ('Community Service');
+
+
+    INSERT INTO project_category (project_id, category_id)
+VALUES
+    (1, 1),
+    (1, 3),
+    (2, 3),
+    (3, 1),
+    (4, 2),
+    (4, 3),
+    (5, 1),
+    (5, 3),
+    (6, 1),
+    (6, 3),
+    (7, 1),
+    (7, 2),
+    (8, 1),
+    (8, 2),
+    (9, 1),
+    (10, 1),
+    (10, 2),
+    (11, 3),
+    (12, 2),
+    (12, 3),
+    (13, 3),
+    (14, 3),
+    (15, 2),
+    (15, 3);
+
+	SELECT * FROM project_category;
