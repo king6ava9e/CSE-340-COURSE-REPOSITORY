@@ -1,26 +1,23 @@
-import express from "express";
+import express from 'express';
 import { fileURLToPath } from 'url';
 import path from 'path';
-import { testConnection } from './src/models/db.js'; 
-import { getAllOrganizations } from './src/models/organizations.js';
-import { getAllProjects } from './src/models/projects.js';
-import { getAllCategories } from './src/models/categories.js';
+import { testConnection } from './src/models/db.js';
+import router from './src/routes.js';
 
-// Define the application environment
+// The environment determines how the application runs
 const NODE_ENV = process.env.NODE_ENV?.toLowerCase() || 'production';
-// Define the port number the server will listen on
-const PORT = process.env.PORT || 3000;
 
+// The port is provided by the environment or defaults to 3000
+const PORT = process.env.PORT || 3000;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
 const app = express();
 
-
-
 /**
-  * Configure Express middleware
-  */
+ * Configure Express middleware
+ */
 
 // Serve static files from the public directory
 app.use(express.static(path.join(__dirname, 'public')));
@@ -28,86 +25,47 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Set EJS as the templating engine
 app.set('view engine', 'ejs');
 
-// Tell Express where to find your templates
+// Tell Express where to find the templates
 app.set('views', path.join(__dirname, 'src/views'));
 
-/**
- * Routes
- */
-
-// Middleware to log all incoming requests
+// Log requests while developing the application
 app.use((req, res, next) => {
   if (NODE_ENV === 'development') {
     console.log(`${req.method} ${req.url}`);
   }
-  next(); // Pass control to the next middleware or route
+  next();
 });
 
-
-// Middleware to make NODE_ENV available to all templates
+// Make the environment available to the EJS templates
 app.use((req, res, next) => {
   res.locals.NODE_ENV = NODE_ENV;
   next();
 });
 
+// Send requests to the appropriate controller through the router
+app.use(router);
 
-app.get('/', async (req, res) => {
-  const title = 'Home';
-  res.render('home', { title });
-});
-
-app.get('/organizations', async (req, res) => {
-  const organizations = await getAllOrganizations();
-  const title = 'Our Partner Organizations';
-  res.render('organizations', { title, organizations });
-});
-
-app.get('/projects', async (req, res) => {
-  const projects = await getAllProjects();
-
-  const title = 'Service Projects';
-  res.render('projects', { title, projects });
-});
-
-app.get('/categories', async (req, res) => {
-  const categories = await getAllCategories();
-
-  const title = 'Service Project Categories';
-  res.render('categories', { title, categories });
-});
-
-// Test route for 500 errors
-app.get('/test-error', (req, res, next) => {
-  const err = new Error('This is a test error');
-  err.status = 500;
-  next(err);
-});
-
-// Catch-all route for 404 errors
+// Handle requests for pages that do not exist
 app.use((req, res, next) => {
   const err = new Error('Page Not Found');
   err.status = 404;
   next(err);
 });
 
-// Global error handler
+// Handle errors from the application
 app.use((err, req, res, next) => {
-  // Log error details for debugging
   console.error('Error occurred:', err.message);
   console.error('Stack trace:', err.stack);
 
-  // Determine status and template
   const status = err.status || 500;
   const template = status === 404 ? '404' : '500';
 
-  // Prepare data for the template
   const context = {
     title: status === 404 ? 'Page Not Found' : 'Server Error',
     error: err.message,
     stack: err.stack
   };
 
-  // Render the appropriate error template
   res.status(status).render(`errors/${template}`, context);
 });
 
