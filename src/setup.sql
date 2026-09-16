@@ -19,8 +19,16 @@ VALUES
 
 select * from organization;
 
-
-
+--sercvice_project table to store information about service projects
+CREATE TABLE service_project (
+    project_id SERIAL PRIMARY KEY,
+    organization_id INTEGER NOT NULL,
+    title VARCHAR(150) NOT NULL,
+    description TEXT NOT NULL,
+    location VARCHAR(255) NOT NULL,
+    date DATE NOT NULL,
+    FOREIGN KEY (organization_id) REFERENCES organization(organization_id)
+););
 
 INSERT INTO service_project
     (organization_id, title, description, location, date)
@@ -54,7 +62,7 @@ VALUES
     name VARCHAR(100) NOT NULL UNIQUE
 );
 
-
+// project_category table to establish many-to-many relationship between service_project and category
 CREATE TABLE project_category (
     project_id INTEGER NOT NULL,
     category_id INTEGER NOT NULL,
