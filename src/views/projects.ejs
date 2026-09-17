@@ -16,29 +16,35 @@
             <li><a href="/projects">Projects</a></li>
         </ul>
     </nav> -->
-    <%- include('partials/header') %>
-    
-        <main>
-            <h1>
-                <%= title %>
-            </h1>
-            <h2>Upcoming Service Projects</h2>
-    
-            <ul class="project-list">
-                <% projects.forEach(project=> { %>
-                    <li class="project-card">
-                        <strong>
-                            <%= new Date(project.date).toLocaleDateString('en-GB') %>:
-                                <%= project.title %>
-                                    (<%= project.organization_name %>)
-                        </strong>
-                    </li>
-                    <% }) %>
-            </ul>
-        </main>
-    
-        <%- include('partials/footer') %>
+<%- include('partials/header') %>
 
-<!-- </body>
+    <main>
+        <h1>
+            <%= title %>
+        </h1>
+        <h2>Upcoming Service Projects</h2>
+
+        <ul class="project-list">
+            <% projects.forEach(project=> { %>
+                <li class="project-card">
+                    <strong>
+                        <%= new Date(project.date).toLocaleDateString('en-GB') %>:
+                            <a href="/project/<%= project.project_id %>">
+                                <%= project.title %>
+                            </a>
+                            (
+                            <a href="/organization/<%= project.organization_id %>">
+                                <%= project.organization_name %>
+                            </a>
+                            )
+                    </strong>
+                </li>
+                <% }) %>
+        </ul>
+    </main>
+
+    <%- include('partials/footer') %>
+
+        <!-- </body>
 
 </html> -->
