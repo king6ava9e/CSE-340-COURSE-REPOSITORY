@@ -379,3 +379,42 @@ footer p {
         animation-duration: 0.01ms !important;
     }
 }
+
+
+
+/* Flash messages */
+.alert {
+    width: min(100% - 2rem, 1100px);
+    margin: 1.5rem auto;
+    padding: 1rem 1.25rem;
+    border: 1px solid;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.5;
+    box-sizing: border-box;
+}
+
+.alert.success {
+    color: #166534;
+    background: #f0fdf4;
+    border-color: #bbf7d0;
+}
+
+.alert.error {
+    color: #991b1b;
+    background: #fef2f2;
+    border-color: #fecaca;
+}
+
+.alert.warning {
+    color: #92400e;
+    background: #fffbeb;
+    border-color: #fde68a;
+}
+
+.alert.info {
+    color: #1e40af;
+    background: #eff6ff;
+    border-color: #bfdbfe;
+}
