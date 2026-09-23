@@ -7,7 +7,8 @@ import { testErrorPage } from './controllers/errors.js';
 import { showOrganizationDetailsPage } from './controllers/organizations.js';
 import { showCategoryDetailsPage } from './controllers/categories.js';
 import {
-    showNewOrganizationForm, processNewOrganizationForm
+    showNewOrganizationForm, processNewOrganizationForm, organizationValidation
+
 } from './controllers/organizations.js';
 
 
@@ -36,5 +37,6 @@ router.get('/new-organization', showNewOrganizationForm);
 
 
 // Route to handle new organization form submission
-router.post('/new-organization', processNewOrganizationForm);
+router.post('/new-organization', organizationValidation, processNewOrganizationForm);
+
 export default router;
