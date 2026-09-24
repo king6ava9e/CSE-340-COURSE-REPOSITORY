@@ -1,13 +1,16 @@
-// Import any needed model functions
 import {
-    getAllOrganizations, getOrganizationDetails, createOrganization
+    getAllOrganizations,
+    getOrganizationDetails,
+    createOrganization,
+    updateOrganization
 } from '../models/organizations.js';
+
 import { body, validationResult } from 'express-validator';
+
 import { getProjectsByOrganizationId } from '../models/projects.js';
 
 
 
-// Define validation and sanitization rules for organization form
 // Define validation rules for organization form
 const organizationValidation = [
     body('name')
@@ -52,12 +55,51 @@ const showOrganizationDetailsPage = async (req, res) => {
 };
 
 
+const showEditOrganizationForm = async (req, res) => {
+    const organizationId = req.params.id;
+    const organizationDetails = await getOrganizationDetails(organizationId);
+
+    const title = 'Edit Organization';
+    res.render('edit-organization', { title, organizationDetails });
+};
+
 
 const showNewOrganizationForm = async (req, res) => {
     const title = 'Add New Organization';
 
     res.render('new-organization', { title });
-}
+};
+
+
+const processEditOrganizationForm = async (req, res) => {
+    // Check for validation errors
+    const results = validationResult(req);
+
+    if (!results.isEmpty()) {
+        // Validation failed - loop through errors
+        results.array().forEach((error) => {
+            req.flash('error', error.msg);
+        });
+
+        // Redirect back to the edit organization form
+        return res.redirect('/edit-organization/' + req.params.id);
+    }
+
+    const organizationId = req.params.id;
+    const { name, description, contactEmail, logoFilename } = req.body;
+
+    await updateOrganization(
+        organizationId,
+        name,
+        description,
+        contactEmail,
+        logoFilename
+    );
+
+    req.flash('success', 'Organization updated successfully!');
+
+    res.redirect(`/organization/${organizationId}`);
+};
 
 
 const processNewOrganizationForm = async (req, res) => {
@@ -88,11 +130,15 @@ const processNewOrganizationForm = async (req, res) => {
 
     res.redirect(`/organization/${organizationId}`);
 };
+
+
 // Export any controller functions
 export {
     showOrganizationsPage,
     showOrganizationDetailsPage,
     showNewOrganizationForm,
     processNewOrganizationForm,
-    organizationValidation
+    organizationValidation,
+    showEditOrganizationForm,
+    processEditOrganizationForm
 };
