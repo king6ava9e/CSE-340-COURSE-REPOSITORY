@@ -4,52 +4,21 @@ import {
     getProjectsByOrganizationId,
     getUpcomingProjects,
     getProjectDetails,
-    createProject
+    createProject,
+    updateProject
 } from '../models/projects.js';
 
+import {
+    getAllOrganizations
+} from '../models/organizations.js';
+
 import { getCategoriesByProjectId } from '../models/categories.js';
-import { getAllOrganizations } from '../models/organizations.js';
 
 import { body, validationResult } from 'express-validator';
 
 const NUMBER_OF_UPCOMING_PROJECTS = 5;
 
-const projectValidation = [
-    body('title')
-        .trim()
-        .notEmpty()
-        .withMessage('Project title is required')
-        .isLength({ min: 3, max: 200 })
-        .withMessage('Project title must be between 3 and 200 characters'),
-
-    body('description')
-        .trim()
-        .notEmpty()
-        .withMessage('Project description is required')
-        .isLength({ max: 999 })
-        .withMessage('Project description must be less than 1000 characters'),
-
-    body('location')
-        .trim()
-        .notEmpty()
-        .withMessage('Project location is required')
-        .isLength({ max: 199 })
-        .withMessage('Project location must be less than 200 characters'),
-
-    body('date')
-        .notEmpty()
-        .withMessage('Project date is required')
-        .isDate()
-        .withMessage('Please provide a valid date'),
-
-    body('organizationId')
-        .notEmpty()
-        .withMessage('Organization is required')
-        .isInt()
-        .withMessage('Organization ID must be a valid integer')
-];
-
-// Display all service projects
+// Display all upcoming service projects
 const showProjectsPage = async (req, res) => {
     const projects = await getUpcomingProjects(NUMBER_OF_UPCOMING_PROJECTS);
     const title = 'Upcoming Service Projects';
@@ -67,52 +36,125 @@ const showProjectDetailsPage = async (req, res) => {
     res.render('project', { title, projectDetails, categories });
 };
 
+// Display the new service project form
 const showNewProjectForm = async (req, res) => {
     const organizations = await getAllOrganizations();
-    const title = 'Add New Service Project';
+    const title = 'Create New Service Project';
 
     res.render('new-project', { title, organizations });
 };
 
+// Process the new service project form
 const processNewProjectForm = async (req, res) => {
-    // Check for validation errors
-    const results = validationResult(req);
+    const errors = validationResult(req);
 
-    if (!results.isEmpty()) {
-        results.array().forEach((error) => {
-            req.flash('error', error.msg);
-        });
+    if (!errors.isEmpty()) {
+        const organizations = await getAllOrganizations();
+        const title = 'Create New Service Project';
 
-        return res.redirect('/new-project');
-    }
-
-    // Extract form data from req.body
-    const { title, description, location, date, organizationId } = req.body;
-
-    try {
-        // Create the new project in the database
-        const newProjectId = await createProject(
+        return res.render('new-project', {
             title,
-            description,
-            location,
-            date,
-            organizationId
-        );
-
-        req.flash('success', 'New service project created successfully!');
-        res.redirect(`/project/${newProjectId}`);
-    } catch (error) {
-        console.error('Error creating new project:', error);
-        req.flash('error', 'There was an error creating the service project.');
-        res.redirect('/new-project');
+            organizations,
+            errors: errors.array(),
+            data: req.body
+        });
     }
+
+    const {
+        title,
+        description,
+        location,
+        date,
+        organizationId
+    } = req.body;
+
+    const newProjectId = await createProject(
+        title,
+        description,
+        location,
+        date,
+        organizationId
+    );
+
+    req.flash('success', 'Service project created successfully!');
+
+    res.redirect(`/project/${newProjectId}`);
 };
 
-// Make the controller available to the routes
+// Display the edit service project form
+const showEditProjectForm = async (req, res) => {
+    const projectId = req.params.id;
+    const projectDetails = await getProjectDetails(projectId);
+    const organizations = await getAllOrganizations();
+    const title = 'Edit Service Project';
+
+    res.render('edit-project', {
+        title,
+        projectDetails,
+        organizations
+    });
+};
+
+// Process the edit service project form
+const processEditProjectForm = async (req, res) => {
+    const projectId = req.params.id;
+
+    const {
+        title,
+        description,
+        location,
+        date,
+        organizationId
+    } = req.body;
+
+    await updateProject(
+        projectId,
+        title,
+        description,
+        location,
+        date,
+        organizationId
+    );
+
+    req.flash('success', 'Service project updated successfully!');
+
+    res.redirect(`/project/${projectId}`);
+};
+
+// Validation rules for new service projects
+const projectValidation = [
+    body('title')
+        .trim()
+        .isLength({ min: 3, max: 100 })
+        .withMessage('Title must be between 3 and 100 characters.'),
+
+    body('description')
+        .trim()
+        .isLength({ max: 1000 })
+        .withMessage('Description must be less than 1000 characters.'),
+
+    body('location')
+        .trim()
+        .isLength({ max: 200 })
+        .withMessage('Location must be less than 200 characters.'),
+
+    body('date')
+        .isISO8601()
+        .withMessage('Please enter a valid date.'),
+
+    body('organizationId')
+        .notEmpty()
+        .withMessage('Please select an organization.')
+];
+
+// Export the controller functions
 export {
     showProjectsPage,
     showProjectDetailsPage,
     showNewProjectForm,
-    processNewProjectForm, projectValidation
-
+    processNewProjectForm,
+    showEditProjectForm,
+    processEditProjectForm,
+    
+    projectValidation
 };
