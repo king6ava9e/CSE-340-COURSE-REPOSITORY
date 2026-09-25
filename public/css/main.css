@@ -544,3 +544,135 @@ form[action^="/edit-organization/"] button {
 form[action^="/edit-organization/"] button:hover {
     background-color: var(--secondary);
 }
+
+
+
+
+
+
+/* ---------- New Service Project Form ---------- */
+
+form[action="/new-project"] {
+    max-width: 700px;
+    margin: var(--spacing-lg) auto;
+    padding: var(--spacing-lg);
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+form[action="/new-project"] .form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+form[action="/new-project"] label {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+form[action="/new-project"] input,
+form[action="/new-project"] textarea,
+form[action="/new-project"] select {
+    width: 100%;
+    padding: 0.75rem;
+    font: inherit;
+    color: var(--text);
+    background-color: var(--background);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+}
+
+form[action="/new-project"] textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+form[action="/new-project"] input:focus,
+form[action="/new-project"] textarea:focus,
+form[action="/new-project"] select:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+    border-color: var(--accent);
+}
+
+form[action="/new-project"] select {
+    cursor: pointer;
+}
+
+form[action="/new-project"] button {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font: inherit;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: var(--primary);
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+}
+
+form[action="/new-project"] button:hover {
+    background-color: var(--secondary);
+}
+
+
+
+/* ---------- Assign Categories Form ---------- */
+
+form[action^="/assign-categories/"] {
+    max-width: 700px;
+    margin: var(--spacing-lg) auto;
+    padding: var(--spacing-lg);
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+form[action^="/assign-categories/"] .form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+form[action^="/assign-categories/"] .form-group>div {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    background-color: var(--background);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+}
+
+form[action^="/assign-categories/"] input[type="checkbox"] {
+    width: 1.1rem;
+    height: 1.1rem;
+    accent-color: var(--accent);
+    cursor: pointer;
+}
+
+form[action^="/assign-categories/"] label {
+    margin: 0;
+    font-weight: 500;
+    color: var(--text);
+    cursor: pointer;
+}
+
+form[action^="/assign-categories/"] button {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font: inherit;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: var(--primary);
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+}
+
+form[action^="/assign-categories/"] button:hover {
+    background-color: var(--secondary);
+}

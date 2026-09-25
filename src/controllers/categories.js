@@ -2,8 +2,12 @@
 import {
     getAllCategories,
     getCategoryDetails,
-    getProjectsByCategoryId
+    getProjectsByCategoryId,
+    getCategoriesByProjectId,
+    updateCategoryAssignments
 } from '../models/categories.js';
+
+import { getProjectDetails } from '../models/projects.js';
 
 // Display all service categories
 const showCategoriesPage = async (req, res) => {
@@ -23,5 +27,39 @@ const showCategoryDetailsPage = async (req, res) => {
     res.render('category', { title, categoryDetails, projects });
 };
 
+// Display the assign categories form for a project
+const showAssignCategoriesForm = async (req, res) => {
+    const projectId = req.params.projectId;
+    const projectDetails = await getProjectDetails(projectId);
+    const categories = await getAllCategories();
+    const assignedCategories = await getCategoriesByProjectId(projectId);
+    const title = 'Assign Categories to Project';
+
+    res.render('assign-categories', {
+        title,
+        projectId,
+        projectDetails,
+        categories,
+        assignedCategories
+    });
+};
+
+// Process the assign categories form submission
+const processAssignCategoriesForm = async (req, res) => {
+    const projectId = req.params.projectId;
+    const categoryIds = req.body.categoryIds || [];
+
+    await updateCategoryAssignments(projectId, categoryIds);
+
+    req.flash('success', 'Project categories updated successfully!');
+
+    res.redirect(`/project/${projectId}`);
+};
+
 // Export the controller functions
-export { showCategoriesPage, showCategoryDetailsPage };
+export {
+    showCategoriesPage,
+    showCategoryDetailsPage,
+    showAssignCategoriesForm,
+    processAssignCategoriesForm
+};

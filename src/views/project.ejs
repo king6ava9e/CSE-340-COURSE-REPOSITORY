@@ -1,4 +1,3 @@
-```ejs
 <%- include('partials/header') %>
 
     <main>
@@ -37,7 +36,13 @@
                 </li>
                 <% }) %>
         </ul>
+
+        <!-- Link to the assign categories form -->
+        <p>
+            <a href="/assign-categories/<%= projectDetails.project_id %>">
+                Edit Categories
+            </a>
+        </p>
     </main>
 
     <%- include('partials/footer') %>
-        ```
