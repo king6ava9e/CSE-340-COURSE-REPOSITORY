@@ -741,3 +741,118 @@ form[action^="/edit-project/"] button {
 form[action^="/edit-project/"] button:hover {
     background-color: var(--secondary);
 }
+
+
+
+
+
+/* ---------- New Category Form ---------- */
+
+form[action="/new-category"] {
+    max-width: 700px;
+    margin: var(--spacing-lg) auto;
+    padding: var(--spacing-lg);
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+form[action="/new-category"] .form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+form[action="/new-category"] label {
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    font-weight: 600;
+    color: var(--text);
+}
+
+form[action="/new-category"] input {
+    width: 100%;
+    padding: 0.75rem;
+    font: inherit;
+    color: var(--text);
+    background-color: var(--background);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    box-sizing: border-box;
+}
+
+form[action="/new-category"] input:focus {
+    outline: 2px solid var(--secondary);
+    outline-offset: 1px;
+}
+
+form[action="/new-category"] button {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font: inherit;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: var(--primary);
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+}
+
+form[action="/new-category"] button:hover {
+    background-color: var(--secondary);
+}
+
+
+/* ---------- Edit Category Form ---------- */
+
+form[action^="/edit-category/"] {
+    max-width: 700px;
+    margin: var(--spacing-lg) auto;
+    padding: var(--spacing-lg);
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+form[action^="/edit-category/"] .form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+form[action^="/edit-category/"] label {
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    font-weight: 600;
+    color: var(--text);
+}
+
+form[action^="/edit-category/"] input {
+    width: 100%;
+    padding: 0.75rem;
+    font: inherit;
+    color: var(--text);
+    background-color: var(--background);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    box-sizing: border-box;
+}
+
+form[action^="/edit-category/"] input:focus {
+    outline: 2px solid var(--secondary);
+    outline-offset: 1px;
+}
+
+form[action^="/edit-category/"] button {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font: inherit;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: var(--primary);
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+}
+
+form[action^="/edit-category/"] button:hover {
+    background-color: var(--secondary);
+}
