@@ -10,7 +10,8 @@
             <div class="form-group">
                 <label for="name">Category Name</label>
 
-                <input type="text" id="name" name="name" value="<%= data?.name || '' %>" maxlength="100" required>
+                <input type="text" id="name" name="name"
+                    value="<%= typeof data !== 'undefined' ? data.name || '' : '' %>" maxlength="100" required>
 
                 <% if (typeof errors !=='undefined' && errors.length> 0) { %>
                     <div class="form-errors">
