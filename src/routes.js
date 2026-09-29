@@ -4,6 +4,8 @@ import { showHomePage } from './controllers/index.js';
 
 import { showOrganizationsPage } from './controllers/organizations.js';
 
+import { showUserRegistrationForm, processUserRegistrationForm } from './controllers/users.js';
+
 import {
     showProjectsPage,
     showProjectDetailsPage,
@@ -119,5 +121,12 @@ router.post(
     categoryValidation,
     processEditCategoryForm
 );
+
+// User registration routes
+router.get('/register', showUserRegistrationForm);
+
+//create post route for user registration form submission
+router.post('/register', processUserRegistrationForm);
+
 
 export default router;
