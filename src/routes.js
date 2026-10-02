@@ -16,6 +16,13 @@ import {
     processEditProjectForm
 } from './controllers/projects.js';
 
+
+import {
+    showLoginForm,
+    processLoginForm,
+    processLogout
+} from './controllers/users.js';
+
 import {
     showCategoriesPage,
     showCategoryDetailsPage,
@@ -127,6 +134,11 @@ router.get('/register', showUserRegistrationForm);
 
 //create post route for user registration form submission
 router.post('/register', processUserRegistrationForm);
+
+// User login routes
+router.get('/login', showLoginForm);
+router.post('/login', processLoginForm);
+router.get('/logout', processLogout);
 
 
 export default router;

@@ -60,9 +60,15 @@ app.use((req, res, next) => {
 
 // Make the environment available to the EJS templates
 app.use((req, res, next) => {
+  res.locals.isLoggedIn = false;
+  if (req.session && req.session.user) {
+    res.locals.isLoggedIn = true;
+  }
+
   res.locals.NODE_ENV = NODE_ENV;
   next();
 });
+
 
 // Send requests to the appropriate controller through the router
 app.use(router);

@@ -929,3 +929,79 @@ form[action="/register"] .password-field button {
     padding: 0.75rem 1rem;
     white-space: nowrap;
 }
+
+
+
+/* Login form */
+form[action="/login"] {
+    max-width: 700px;
+    margin: var(--spacing-lg) auto;
+    padding: var(--spacing-lg);
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+form[action="/login"] .form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+form[action="/login"] label {
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    font-weight: 600;
+    color: var(--text);
+}
+
+form[action="/login"] input {
+    width: 100%;
+    padding: 0.75rem;
+    font: inherit;
+    color: var(--text);
+    background-color: var(--background);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    box-sizing: border-box;
+}
+
+form[action="/login"] input:focus {
+    outline: 2px solid var(--secondary);
+    outline-offset: 1px;
+    border-color: var(--secondary);
+}
+
+form[action="/login"] button {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font: inherit;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: var(--primary);
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+}
+
+form[action="/login"] button:hover {
+    background-color: var(--secondary);
+}
+
+form[action="/login"] .password-field {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: var(--spacing-xs);
+}
+
+form[action="/login"] .password-field input {
+    flex: 1;
+    min-width: 0;
+}
+
+form[action="/login"] .password-field button {
+    flex: 0 0 auto;
+    width: auto;
+    padding: 0.75rem 1rem;
+    white-space: nowrap;
+}
