@@ -1005,3 +1005,66 @@ form[action="/login"] .password-field button {
     padding: 0.75rem 1rem;
     white-space: nowrap;
 }
+
+
+
+/* Dashboard */
+.dashboard-page {
+    max-width: var(--max-width);
+    margin: var(--spacing-lg) auto;
+    padding: 0 var(--spacing-sm);
+}
+
+.dashboard-card {
+    max-width: 700px;
+    margin: var(--spacing-lg) auto;
+    padding: var(--spacing-lg);
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+.dashboard-card h2 {
+    margin-top: 0;
+    margin-bottom: var(--spacing-md);
+    color: var(--primary);
+}
+
+.dashboard-card p {
+    margin-bottom: var(--spacing-sm);
+    color: var(--text);
+}
+
+.dashboard-card strong {
+    color: var(--primary);
+}
+
+
+/* Admin Dashboard */
+.admin-dashboard-page {
+    max-width: var(--max-width);
+    margin: var(--spacing-lg) auto;
+    padding: 0 var(--spacing-sm);
+}
+
+.admin-dashboard-card {
+    max-width: 700px;
+    margin: var(--spacing-lg) auto;
+    padding: var(--spacing-lg);
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+.admin-dashboard-card h2 {
+    margin-top: 0;
+    margin-bottom: var(--spacing-md);
+    color: var(--primary);
+}
+
+.admin-dashboard-card p {
+    margin-bottom: var(--spacing-sm);
+    color: var(--text);
+}

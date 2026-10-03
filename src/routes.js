@@ -2,9 +2,15 @@ import express from 'express';
 
 import { showHomePage } from './controllers/index.js';
 
-import { showOrganizationsPage } from './controllers/organizations.js';
-
-import { showUserRegistrationForm, processUserRegistrationForm } from './controllers/users.js';
+import {
+    showOrganizationsPage,
+    showOrganizationDetailsPage,
+    showNewOrganizationForm,
+    processNewOrganizationForm,
+    organizationValidation,
+    showEditOrganizationForm,
+    processEditOrganizationForm
+} from './controllers/organizations.js';
 
 import {
     showProjectsPage,
@@ -16,123 +22,84 @@ import {
     processEditProjectForm
 } from './controllers/projects.js';
 
-
-import {
-    showLoginForm,
-    processLoginForm,
-    processLogout
-} from './controllers/users.js';
-
 import {
     showCategoriesPage,
     showCategoryDetailsPage,
     showAssignCategoriesForm,
-    processAssignCategoriesForm, showNewCategoryForm,
-    processNewCategoryForm, categoryValidation, showEditCategoryForm,
+    processAssignCategoriesForm,
+    showNewCategoryForm,
+    processNewCategoryForm,
+    categoryValidation,
+    showEditCategoryForm,
     processEditCategoryForm
-
 } from './controllers/categories.js';
+
+import {
+    showUserRegistrationForm,
+    processUserRegistrationForm,
+    showLoginForm,
+    processLoginForm,
+    processLogout,
+    requireLogin,
+    showDashboard,
+    requireRole
+} from './controllers/users.js';
 
 import { testErrorPage } from './controllers/errors.js';
 
-import {
-    showOrganizationDetailsPage,
-    showNewOrganizationForm,
-    processNewOrganizationForm,
-    organizationValidation,
-    showEditOrganizationForm,
-    processEditOrganizationForm
-} from './controllers/organizations.js';
-
-
 const router = express.Router();
 
-// Connect each URL to its controller
-
+// Home page
 router.get('/', showHomePage);
 
+// Organization routes
 router.get('/organizations', showOrganizationsPage);
-
-router.get('/projects', showProjectsPage);
-
-router.get('/categories', showCategoriesPage);
-
-// Route used to test the 500 error page
-
-router.get('/test-error', testErrorPage);
-
-// Route for organization details page
 
 router.get('/organization/:id', showOrganizationDetailsPage);
 
-// Route for project details page
+// New organization routes
+router.get('/new-organization', requireRole('admin'), showNewOrganizationForm);
+router.post('/new-organization', requireRole('admin'), organizationValidation, processNewOrganizationForm);
+
+// Edit organization routes
+router.get('/edit-organization/:id', requireRole('admin'), showEditOrganizationForm);
+router.post('/edit-organization/:id', requireRole('admin'), organizationValidation, processEditOrganizationForm);
+
+// Project routes
+router.get('/projects', showProjectsPage);
 
 router.get('/project/:id', showProjectDetailsPage);
 
-// Route for category details page
+// New project routes
+router.get('/new-project', requireRole('admin'), showNewProjectForm);
+router.post('/new-project', requireRole('admin'), projectValidation, processNewProjectForm);
+
+// Edit project routes
+router.get('/edit-project/:id', requireRole('admin'), showEditProjectForm);
+router.post('/edit-project/:id', requireRole('admin'), processEditProjectForm);
+
+// Assign categories to projects
+router.get('/assign-categories/:projectId', requireRole('admin'), showAssignCategoriesForm);
+router.post('/assign-categories/:projectId', requireRole('admin'), processAssignCategoriesForm);
+
+// Category routes
+router.get('/categories', showCategoriesPage);
 
 router.get('/category/:id', showCategoryDetailsPage);
 
-// Route for new organization page
+// New category routes
+router.get('/new-category', requireRole('admin'), showNewCategoryForm);
+router.post('/new-category', requireRole('admin'), categoryValidation, processNewCategoryForm);
 
-router.get('/new-organization', showNewOrganizationForm);
+// Edit category routes
+router.get('/edit-category/:id', requireRole('admin'), showEditCategoryForm);
+router.post('/edit-category/:id', requireRole('admin'), categoryValidation, processEditCategoryForm);
 
-// Route to handle new organization form submission
-
-router.post('/new-organization', organizationValidation, processNewOrganizationForm);
-
-// Route to display the edit organization form
-
-router.get('/edit-organization/:id', showEditOrganizationForm);
-
-// Route to handle the edit organization form submission
-
-router.post('/edit-organization/:id', organizationValidation, processEditOrganizationForm);
-
-// connects the new project URL to the showNewProject controller
-
-router.get('/new-project', showNewProjectForm);
-
-// Route to handle new project form submission
-
-router.post('/new-project', projectValidation, processNewProjectForm);
-
-// Route to display the assign categories form
-
-router.get('/assign-categories/:projectId', showAssignCategoriesForm);
-
-// Route to process the assign categories form
-
-router.post('/assign-categories/:projectId', processAssignCategoriesForm);
-
-// Route to display the edit project form
-
-router.get('/edit-project/:id', showEditProjectForm);
-
-// Route to process the edit project form
-
-router.post('/edit-project/:id', processEditProjectForm);
-
-// Route to display the new category form
-router.get('/new-category', showNewCategoryForm);
-
-// Route to process the new category form
-router.post('/new-category', categoryValidation, processNewCategoryForm);
-
-// Route to display the edit category form
-router.get('/edit-category/:id', showEditCategoryForm);
-
-// Route to process the edit category form
-router.post(
-    '/edit-category/:id',
-    categoryValidation,
-    processEditCategoryForm
-);
+// Error test route
+router.get('/test-error', testErrorPage);
 
 // User registration routes
 router.get('/register', showUserRegistrationForm);
-
-//create post route for user registration form submission
 router.post('/register', processUserRegistrationForm);
 
 // User login routes
@@ -140,5 +107,12 @@ router.get('/login', showLoginForm);
 router.post('/login', processLoginForm);
 router.get('/logout', processLogout);
 
+// Protected dashboard route
+router.get('/dashboard', requireLogin, showDashboard);
+
+// Protected admin dashboard route
+router.get('/admin', requireLogin, requireRole('admin'), (req, res) => {
+    res.render('admin/dashboard', { title: 'Admin Dashboard' });
+});
 
 export default router;

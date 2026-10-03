@@ -37,19 +37,21 @@
                 <% }) %>
         </ul>
 
-        <!-- Link to the assign categories form -->
-        <p>
-            <a href="/assign-categories/<%= projectDetails.project_id %>">
-                Edit Categories
-            </a>
-        </p>
+        <% if (user && user.role_name==='admin' ) { %>
+            <!-- Link to the assign categories form -->
+            <p>
+                <a href="/assign-categories/<%= projectDetails.project_id %>">
+                    Edit Categories
+                </a>
+            </p>
 
-        <!-- Link to the edit project form -->
-        <p>
-            <a href="/edit-project/<%= projectDetails.project_id %>">
-                Edit Project
-            </a>
-        </p>
+            <!-- Link to the edit project form -->
+            <p>
+                <a href="/edit-project/<%= projectDetails.project_id %>">
+                    Edit Project
+                </a>
+            </p>
+            <% } %>
     </main>
 
     <%- include('partials/footer') %>
