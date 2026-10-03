@@ -1068,3 +1068,49 @@ form[action="/login"] .password-field button {
     margin-bottom: var(--spacing-sm);
     color: var(--text);
 }
+
+
+
+
+
+/* Users Page */
+.users-page {
+    max-width: var(--max-width);
+    margin: var(--spacing-lg) auto;
+    padding: 0 var(--spacing-sm);
+}
+
+.users-table-container {
+    margin: var(--spacing-lg) auto;
+    overflow-x: auto;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+.users-table-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.users-table-container th,
+.users-table-container td {
+    padding: var(--spacing-sm);
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+.users-table-container th {
+    font-weight: 600;
+    color: var(--text);
+    background-color: var(--background);
+}
+
+.users-table-container td {
+    color: var(--text);
+}
+
+.users-table-container tr:last-child td {
+    border-bottom: none;
+}
