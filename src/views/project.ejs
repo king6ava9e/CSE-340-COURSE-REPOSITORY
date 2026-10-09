@@ -37,21 +37,39 @@
                 <% }) %>
         </ul>
 
-        <% if (user && user.role_name==='admin' ) { %>
-            <!-- Link to the assign categories form -->
-            <p>
-                <a href="/assign-categories/<%= projectDetails.project_id %>">
-                    Edit Categories
-                </a>
-            </p>
-
-            <!-- Link to the edit project form -->
-            <p>
-                <a href="/edit-project/<%= projectDetails.project_id %>">
-                    Edit Project
-                </a>
-            </p>
+        <!-- Volunteer signup options for logged-in users -->
+        <% if (isLoggedIn) { %>
+            <section class="volunteer-actions">
+                <% if (isVolunteer) { %>
+                    <form action="/project/<%= projectDetails.project_id %>/unvolunteer" method="POST">
+                        <button class="volunteer-button volunteer-button--withdraw" type="submit">
+                            Withdraw Volunteer Signup
+                        </button>
+                    </form>
+                    <% } else { %>
+                        <form action="/project/<%= projectDetails.project_id %>/volunteer" method="POST">
+                            <button class="volunteer-button" type="submit">
+                                Volunteer for This Project
+                            </button>
+                        </form>
+                        <% } %>
+            </section>
             <% } %>
+
+                <!-- Admin-only project management options -->
+                <% if (user && user.role_name==='admin' ) { %>
+                    <p>
+                        <a href="/assign-categories/<%= projectDetails.project_id %>">
+                            Edit Categories
+                        </a>
+                    </p>
+
+                    <p>
+                        <a href="/edit-project/<%= projectDetails.project_id %>">
+                            Edit Project
+                        </a>
+                    </p>
+                    <% } %>
     </main>
 
     <%- include('partials/footer') %>

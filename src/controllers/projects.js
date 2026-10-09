@@ -1,11 +1,15 @@
 // Get the projects from the database
+
 import {
     getAllProjects,
     getProjectsByOrganizationId,
     getUpcomingProjects,
     getProjectDetails,
     createProject,
-    updateProject
+    updateProject,
+    addVolunteer,
+    removeVolunteer,
+    getProjectsByVolunteerId
 } from '../models/projects.js';
 
 import {
@@ -31,9 +35,30 @@ const showProjectDetailsPage = async (req, res) => {
     const projectId = req.params.id;
     const projectDetails = await getProjectDetails(projectId);
     const categories = await getCategoriesByProjectId(projectId);
+
+    const isLoggedIn = Boolean(req.session.user);
+    let isVolunteer = false;
+
+    if (isLoggedIn) {
+        const volunteeredProjects = await getProjectsByVolunteerId(
+            req.session.user.user_id
+        );
+
+        isVolunteer = volunteeredProjects.some(
+            project => Number(project.project_id) === Number(projectId)
+        );
+    }
+
     const title = 'Project Details';
 
-    res.render('project', { title, projectDetails, categories });
+    res.render('project', {
+        title,
+        projectDetails,
+        categories,
+        isLoggedIn,
+        isVolunteer,
+        user: req.session.user
+    });
 };
 
 // Display the new service project form
@@ -147,6 +172,34 @@ const projectValidation = [
         .withMessage('Please select an organization.')
 ];
 
+/**
+ * Process a user's volunteer signup for a service project
+ */
+const processVolunteerSignup = async (req, res) => {
+    const userId = req.session.user.user_id;
+    const projectId = req.params.id;
+
+    await addVolunteer(userId, projectId);
+
+    req.flash('success', 'You have successfully signed up to volunteer!');
+
+    res.redirect(`/project/${projectId}`);
+};
+
+/**
+ * Process a user's volunteer withdrawal from a service project
+ */
+const processVolunteerWithdrawal = async (req, res) => {
+    const userId = req.session.user.user_id;
+    const projectId = req.params.id;
+
+    await removeVolunteer(userId, projectId);
+
+    req.flash('success', 'You have withdrawn your volunteer signup.');
+
+    res.redirect(`/project/${projectId}`);
+};
+
 // Export the controller functions
 export {
     showProjectsPage,
@@ -155,6 +208,7 @@ export {
     processNewProjectForm,
     showEditProjectForm,
     processEditProjectForm,
-    
+    processVolunteerSignup,
+    processVolunteerWithdrawal,
     projectValidation
 };

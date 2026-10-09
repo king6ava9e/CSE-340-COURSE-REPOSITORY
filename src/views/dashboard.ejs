@@ -21,6 +21,48 @@
                 </p>
                 <% } %>
         </div>
+
+        <section class="volunteer-projects">
+            <h2>My Volunteer Projects</h2>
+
+            <% if (volunteeredProjects && volunteeredProjects.length> 0) { %>
+                <% volunteeredProjects.forEach(project=> { %>
+                    <article class="dashboard-card volunteer-project-card">
+                        <h3>
+                            <a href="/project/<%= project.project_id %>">
+                                <%= project.title %>
+                            </a>
+                        </h3>
+
+                        <p>
+                            <strong>Date:</strong>
+                            <%= project.date %>
+                        </p>
+
+                        <p>
+                            <strong>Location:</strong>
+                            <%= project.location %>
+                        </p>
+
+                        <p>
+                            <strong>Organisation:</strong>
+                            <%= project.organization_name %>
+                        </p>
+
+                        <form action="/project/<%= project.project_id %>/unvolunteer" method="POST">
+                            <button class="volunteer-button volunteer-button--withdraw" type="submit">
+                                Withdraw Volunteer Signup
+                            </button>
+                        </form>
+                    </article>
+                    <% }); %>
+                        <% } else { %>
+                            <p>
+                                You haven't signed up to volunteer for any projects yet.
+                                <a href="/projects">Browse projects</a> to find an opportunity.
+                            </p>
+                            <% } %>
+        </section>
     </main>
 
     <%- include('partials/footer') %>

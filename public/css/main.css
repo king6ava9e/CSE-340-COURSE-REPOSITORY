@@ -1114,3 +1114,91 @@ form[action="/login"] .password-field button {
 .users-table-container tr:last-child td {
     border-bottom: none;
 }
+
+
+/* Volunteer signup actions on the project details page */
+.volunteer-actions {
+    margin: 2rem 0;
+    padding: 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+
+.volunteer-actions form {
+    margin: 0;
+}
+
+.volunteer-button {
+    display: inline-block;
+    padding: 0.75rem 1.25rem;
+    border: none;
+    border-radius: 6px;
+    background: var(--accent);
+    color: #ffffff;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.volunteer-button:hover {
+    opacity: 0.85;
+}
+
+.volunteer-button:focus-visible {
+    outline: 3px solid var(--secondary);
+    outline-offset: 3px;
+}
+
+.volunteer-button--withdraw {
+    background: #b91c1c;
+}
+
+
+/* ---------- Dashboard Volunteer Projects ---------- */
+
+.volunteer-projects {
+    margin-top: var(--spacing-xl);
+}
+
+.volunteer-projects>h2 {
+    margin-bottom: var(--spacing-md);
+}
+
+.volunteer-project-card {
+    max-width: 700px;
+}
+
+.volunteer-project-card h3 {
+    margin-top: 0;
+    margin-bottom: var(--spacing-sm);
+    color: var(--primary);
+}
+
+.volunteer-project-card h3 a {
+    color: var(--secondary);
+}
+
+.volunteer-project-card p {
+    margin-bottom: var(--spacing-sm);
+}
+
+.volunteer-project-card form {
+    margin-top: var(--spacing-md);
+    margin-bottom: 0;
+}
+
+.volunteer-project-card .volunteer-button {
+    max-width: 100%;
+}
+
+@media (max-width: 600px) {
+    .volunteer-project-card {
+        padding: var(--spacing-md);
+    }
+
+    .volunteer-project-card .volunteer-button {
+        width: 100%;
+    }
+}

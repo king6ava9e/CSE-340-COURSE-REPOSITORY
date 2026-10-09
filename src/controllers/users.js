@@ -1,5 +1,12 @@
 import bcrypt from 'bcrypt';
-import { createUser, authenticateUser, getAllUsers } from '../models/users.js';
+
+import {
+    createUser,
+    authenticateUser,
+    getAllUsers
+} from '../models/users.js';
+
+import { getProjectsByVolunteerId } from '../models/projects.js';
 
 const showUserRegistrationForm = (req, res) => {
     res.render('register', { title: 'Register' });
@@ -26,11 +33,9 @@ const processUserRegistrationForm = async (req, res) => {
     }
 };
 
-
 const showLoginForm = (req, res) => {
     res.render('login', { title: 'Login' });
 };
-
 
 const processLoginForm = async (req, res) => {
     const { email, password } = req.body;
@@ -47,7 +52,8 @@ const processLoginForm = async (req, res) => {
                 console.log('User logged in:', user);
             }
 
-            res.redirect('/dashboard');        } else {
+            res.redirect('/dashboard');
+        } else {
             req.flash('error', 'Invalid email or password.');
             res.redirect('/login');
         }
@@ -58,7 +64,6 @@ const processLoginForm = async (req, res) => {
     }
 };
 
-
 const processLogout = async (req, res) => {
     if (req.session.user) {
         delete req.session.user;
@@ -67,8 +72,6 @@ const processLogout = async (req, res) => {
     req.flash('success', 'Logout successful!');
     res.redirect('/login');
 };
-
-
 
 const requireLogin = (req, res, next) => {
     if (!req.session || !req.session.user) {
@@ -79,46 +82,48 @@ const requireLogin = (req, res, next) => {
     next();
 };
 
-
-
 /**
- * Middleware factory to require specific role for route access
- * Returns middleware that checks if user has required role
- * 
- * @param {string} role - The role name required (e.g., 'admin', 'user')
+ * Middleware factory to require a specific role for a route.
+ *
+ * @param {string} role - The required role name (e.g. 'admin', 'user')
  * @returns {Function} Express middleware function
  */
 const requireRole = (role) => {
     return (req, res, next) => {
-        // Check if user is logged in first
+        // Check whether the user is logged in first
         if (!req.session || !req.session.user) {
             req.flash('error', 'You must be logged in to access this page.');
             return res.redirect('/login');
         }
 
-        // Check if user's role matches the required role
+        // Check whether the user's role matches the required role
         if (req.session.user.role_name !== role) {
             req.flash('error', 'You do not have permission to access this page.');
             return res.redirect('/');
         }
 
-        // User has required role, continue
         next();
     };
 };
 
-
-const showDashboard = (req, res) => {
+/**
+ * Display the logged-in user's dashboard and volunteer signups.
+ */
+const showDashboard = async (req, res) => {
     const user = req.session.user;
+
+    const volunteeredProjects = await getProjectsByVolunteerId(
+        user.user_id
+    );
 
     res.render('dashboard', {
         title: 'Dashboard',
+        user,
         name: user.name,
-        email: user.email
+        email: user.email,
+        volunteeredProjects
     });
 };
-
-
 
 const showUsersPage = async (req, res) => {
     try {
@@ -135,11 +140,14 @@ const showUsersPage = async (req, res) => {
     }
 };
 
-
-
 export { showUserRegistrationForm, processUserRegistrationForm };
+
 export {
     showLoginForm,
     processLoginForm,
-    processLogout,requireLogin,showDashboard,requireRole,showUsersPage
+    processLogout,
+    requireLogin,
+    showDashboard,
+    requireRole,
+    showUsersPage
 };
